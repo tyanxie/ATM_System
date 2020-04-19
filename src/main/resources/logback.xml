@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scanPeriod="60 seconds">
+    <!-- 定义日志的根目录 -->
+    <property name="LOG_HOME" value="logs"/>
+    <!-- 定义日志文件名称 -->
+    <property name="appName" value="atm"/>
+
+    <!-- 控制台输出 -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <!--
+        日志输出格式：
+			%d : 日期时间
+			%thread : 线程名
+			%-5level：级别从左显示 5 个字符宽度
+			%class : 全类名
+			%M : 方法名
+			%line : 在文件中的行数
+			%msg : 日志消息
+			%n : 换行符
+        -->
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] {%class::%M [%line]} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 -->
+    <appender name="appLogAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 指定日志文件的名称 -->
+        <file>${LOG_HOME}/${appName}.log</file>
+        <!--
+            当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名
+            TimeBasedRollingPolicy : 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。
+        -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 如果是 true，日志被追加到文件结尾，如果是false，清空现存文件，默认是true -->
+            <append>true</append>
+
+            <!--
+                滚动时产生的文件的存放位置及文件名称 %d{yyyy-MM-dd}：按天进行日志滚动
+                %i : 当文件大小超过 maxFileSize 时，按照 i++ 进行文件滚动
+            -->
+            <fileNamePattern>${LOG_HOME}/${appName}-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <!-- 
+                可选节点，控制保留的归档文件的最大数量，超出数量就删除旧文件。
+                假设设置每天滚动且 maxHistory 是 365，则只保存最近 365 天的文件，删除之前的旧文件
+                注意，删除旧文件时那些为了归档而创建的目录也会被删除
+            -->
+            <MaxHistory>180</MaxHistory>
+            <!-- 
+                当日志文件超过 maxFileSize 指定的大小时根据上面提到的 %i 进行日志文件滚动
+                注意此处配置 SizeBasedTriggeringPolicy 是无法实现按文件大小进行滚动的，必须配置 timeBasedFileNamingAndTriggeringPolicy
+            -->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <!-- 日志输出格式： -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] {%class::%M [%line]} : %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--
+        root 与 logger 是父子关系，没有特别定义则默认为 root，任何一个类只会和一个 logger 对应，
+        要么是定义的 logger，要么是 root，判断的关键在于找到这个 logger，然后判断这个 logger 的 appender 和 level
+    -->
+    <root level="info">
+        <appender-ref ref="stdout"/>
+    </root>
+
+    <logger name="top.atm" level="warn" additivity="false">
+        <appender-ref ref="appLogAppender" />
+    </logger>
+</configuration>

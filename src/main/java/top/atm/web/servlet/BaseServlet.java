@@ -27,6 +27,8 @@ public class BaseServlet extends HttpServlet {
         String[] uris = request.getRequestURI().split("/");
         String methodName = uris[uris.length - 1];
 
+        logger.error("hello logger");
+
         try {
             Method method = this.getClass().getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
             method.invoke(this, request, response);

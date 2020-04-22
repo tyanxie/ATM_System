@@ -1,5 +1,6 @@
 package top.atm.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -9,7 +10,7 @@ import java.math.BigDecimal;
  */
 
 @SuppressWarnings ("unused")
-public class Account {
+public class Account implements Serializable {
     private String id;
     private Long userId;
     private Integer bankId;

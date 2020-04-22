@@ -16,6 +16,11 @@ import java.util.Properties;
  */
 
 public class JdbcUtils {
+    /**
+     * 私有构造函数防止构造
+     */
+    private JdbcUtils(){}
+
     private static DataSource dataSource;
 
     static {

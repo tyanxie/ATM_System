@@ -1,5 +1,7 @@
 package top.atm.bean;
 
+import java.io.Serializable;
+
 /**
  * 银行 JavaBean
  *
@@ -7,7 +9,7 @@ package top.atm.bean;
  */
 
 @SuppressWarnings ("unused")
-public class Bank {
+public class Bank implements Serializable {
     private Integer id;
     private String name;
 

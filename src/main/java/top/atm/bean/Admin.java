@@ -1,5 +1,7 @@
 package top.atm.bean;
 
+import java.io.Serializable;
+
 /**
  * 管理员 JavaBean
  *
@@ -7,7 +9,7 @@ package top.atm.bean;
  */
 
 @SuppressWarnings ("unused")
-public class Admin {
+public class Admin implements Serializable {
     private Integer id;
     private Integer bankId;
     private String name;

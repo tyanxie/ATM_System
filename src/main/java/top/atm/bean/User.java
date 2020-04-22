@@ -1,5 +1,7 @@
 package top.atm.bean;
 
+import java.io.Serializable;
+
 /**
  * 用户 JavaBean
  *
@@ -7,7 +9,7 @@ package top.atm.bean;
  */
 
 @SuppressWarnings ("unused")
-public class User {
+public class User implements Serializable {
     private Long id;
     private String name;
     private String address;

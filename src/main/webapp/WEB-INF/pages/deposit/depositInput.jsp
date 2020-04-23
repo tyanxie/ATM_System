@@ -13,7 +13,7 @@
 
         <div align="center">
             <div id="parent-container">
-                <form action="${pageContext.request.contextPath}/deposit" method="post">
+                <form action="${pageContext.request.contextPath}/deposit" method="get">
                     <div>
                         <label for="deposit"
                                style="font-weight: normal;font-size: x-large; color: black; ">请输入存款金额</label>

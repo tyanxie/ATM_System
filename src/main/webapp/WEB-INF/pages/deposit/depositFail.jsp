@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,15 +14,11 @@
         <div align="center">
             <div id="parent-container">
                 <form>
-                    <div style="margin: 13px">
-                        <span style="font-size: x-large; color: black; ">核对失败</span>
-                    </div>
-                    <div style="margin: 13px">
-                        <span style="font-size: x-large; color: black; ">请将钞票取出</span>
-                    </div>
-                    <div style="margin: 13px">
-                        <span style="font-size: x-large; color: black; ">确认无误后重新放入</span>
-                    </div>
+                    <c:forEach items="${requestScope.messages}" var="message">
+                        <div style="margin: 13px">
+                            <span style="font-size: x-large; color: black; ">${message}</span>
+                        </div>
+                    </c:forEach>
                 </form>
                 <p></p>
                 <a class="btn btn-default" href="${pageContext.request.contextPath}/depositInput">

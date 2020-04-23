@@ -12,17 +12,20 @@
 
         <div align="center">
             <div id="parent-container">
-                <form>
+                <form action="${pageContext.request.contextPath}/deposit" method="post">
                     <div style="margin: 40px">
-                        <span style="font-size: x-large; color: black; ">你将要存款的金额为：</span>
+                        <span style="font-size: x-large; color: black; ">你将要存款的金额为：${requestScope.deposit}</span>
                     </div>
+
+                    <input type="hidden" name="deposit" value="${requestScope.deposit}">
+
+                    <p></p>
+                    <input style="font-size: x-large; color: black;" type="submit" class="btn" value="确认"/>
+                    <button type="button" class="btn"
+                            onclick="window.location.href='${pageContext.servletContext.contextPath}/select'">
+                        <span style="font-size: x-large; color: black; ">取消</span>
+                    </button>
                 </form>
-                <p></p>
-                <input style="font-size: x-large; color: black;"  type="submit" class="btn" value="确认"/>
-                <button type="button" class="btn"
-                        onclick="window.location.href='${pageContext.servletContext.contextPath}/select'">
-                    <span style="font-size: x-large; color: black; ">取消</span>
-                </button>
             </div>
         </div>
     </body>

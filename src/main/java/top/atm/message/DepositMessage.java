@@ -5,26 +5,37 @@ package top.atm.message;
  */
 
 @SuppressWarnings ("unused")
-public class DepositMessage extends BaseMessage {
-    private Status status;
-
-    public DepositMessage(String message, Status status) {
-        super(message);
-        this.status = status;
+public class DepositMessage extends AbstractMessage {
+    public DepositMessage(Status status, String... messages) {
+        super(status.getCode(), messages);
     }
 
-    public Status getStatus() {
-        return status;
+    @Override
+    public String debugStatus() {
+        for (Status value : Status.values()) {
+            if (value.code.equals(getStatus())) {
+                return value.name();
+            }
+        }
+        return "UNKNOWN";
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    /**
-     * 存款结果的枚举类型
-     */
     public enum Status {
-        OK
+        OK(0),
+        FORMAT_ERROR(1),
+        DATABASE_ERROR(2),
+        DIGITAL_ERROR(3),
+        VERIFY_ERROR(4),
+        UNKNOWN(5);
+
+        private final Integer code;
+
+        Status(Integer code) {
+            this.code = code;
+        }
+
+        public Integer getCode() {
+            return code;
+        }
     }
 }

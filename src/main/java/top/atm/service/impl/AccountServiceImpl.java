@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AbstractMessage deposit(String accountId, String deposit) {
         BigDecimal amount;
-        DepositMessage message;
+        AbstractMessage message;
         try {
             amount = new BigDecimal(deposit);
             if (amount.compareTo(new BigDecimal("0")) <= 0) {
@@ -81,5 +81,30 @@ public class AccountServiceImpl implements AccountService {
             message = new DepositMessage(DepositMessage.Status.OK);
         }
         return message;
+    }
+
+    @Override
+    public boolean withdraw(String accountId, String withdraw) {
+        BigDecimal amount;
+        BigDecimal balance = accountDao.getBalance(accountId);
+        if (balance == null) {
+            // 获取账户余额失败, 判定存款失败
+            return false;
+        }
+        try {
+            amount = new BigDecimal(withdraw);
+            if (balance.compareTo(amount) < 0) {
+                // 账户的余额不足, 存款失败
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            // 无法转换为 BigDecimal 类型, 取款失败
+            return false;
+        }
+
+        int result = accountDao.withdraw(accountId, amount);
+        // 修改的行数不为 1, 修改失败, 亦即存款失败
+        // 修改的行数为 1, 则存款成功
+        return result == 1;
     }
 }

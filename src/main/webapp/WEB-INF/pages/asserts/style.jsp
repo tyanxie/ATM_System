@@ -12,4 +12,12 @@
         height: 300px;
         text-align: center;
     }
+
+    @media (max-width: 767px) {
+        #welcome-span {
+            position: absolute;
+            top: 0;
+            right: 72px;
+        }
+    }
 </style>

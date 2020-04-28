@@ -21,9 +21,9 @@
                     </div>
                 </form>
                 <p></p>
-                <button type="button" class="btn" onclick="window.location.href='../select.jsp'">
+                <a href="${pageContext.request.contextPath}/select" class="btn btn-default">
                     <span style="font-size: x-large; color: black; ">点击此处返回主页</span>
-                </button>
+                </a>
             </div>
         </div>
     </body>

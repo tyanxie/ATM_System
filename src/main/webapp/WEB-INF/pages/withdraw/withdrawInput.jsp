@@ -1,32 +1,35 @@
 <%@ page contentType="text/html;charset=utf-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <%@include file="../asserts/style.jsp"%>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <%@include file="../asserts/style.jsp" %>
+    </head>
 
     <body>
         <%@include file="../asserts/parent.jsp" %>
 
         <div align="center">
             <div id="parent-container">
-                <form>
+                <form action="${pageContext.request.contextPath}/withdraw" method="post">
                     <div>
-                        <span style="font-size: x-large; color: black; ">请输入取款金额</span>
+                        <label for="withdraw"
+                               style="font-weight: normal;font-size: x-large; color: black; ">请输入取款金额</label>
                     </div>
-                    <div class="input-group input-group-lg">
-                        <input type="number" step="100" min="0" class="form-control" placeholder="" aria-describedby="sizing-addon1">
-                        <span class="input-group-addon">
-                    ￥
-                </span>
+
+                    <div class="form-group">
+                        <div class="input-group input-group-lg">
+                            <input id="withdraw" name="withdraw"
+                                   type="number" step="100" min="100" class="form-control" placeholder="100.00"
+                                   aria-describedby="sizing-addon1" required autofocus>
+                            <span class="input-group-addon">￥</span>
+                        </div>
                     </div>
+
+                    <input style="font-size: x-large; color: black;" type="submit" class="btn btn-default" value="确认"/>
                 </form>
                 <p></p>
-                <button type="button" class="btn" onclick="javascrtpt:window.location.href='withdrawEnd.jsp'">
-                    <span style="font-size: x-large; color: black;">确认</span>
-                </button>
             </div>
         </div>
     </body>

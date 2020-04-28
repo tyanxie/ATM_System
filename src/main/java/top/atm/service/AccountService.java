@@ -25,8 +25,8 @@ public interface AccountService {
      * 存款
      *
      * @param accountId 存款的目标账户
-     * @param deposit   存款的金额, 需要在进行校验并转换为 BigDecimal 类型
-     * @return 存款的结果, 存款成功则为 true
+     * @param deposit   存款的金额, 需要进行校验并转换为 BigDecimal 类型
+     * @return 存款的结果, 存款成功则 AbstractMessage.status 为 0
      */
     AbstractMessage deposit(String accountId, String deposit);
 
@@ -38,4 +38,13 @@ public interface AccountService {
      * @return 校验结果, 成功为 true, 失败为 false
      */
     AbstractMessage verifyDeposit(String deposit);
+
+    /**
+     * 取款
+     *
+     * @param accountId 取款的目标账户
+     * @param withdraw  取款的金额, 需要进行校验并转换为 BigDecimal 类型
+     * @return 取款的结果, 成功则为 true
+     */
+    boolean withdraw(String accountId, String withdraw);
 }

@@ -24,11 +24,28 @@ public interface AccountDao {
     Account getAccountByIdAndPassword(String id, String password);
 
     /**
+     * 获取余额
+     *
+     * @param accountId 需要查询余额的账户的 id
+     * @return 查询到的余额, 如果没有查询到, 则返回 null
+     */
+    BigDecimal getBalance(String accountId);
+
+    /**
      * 存款
      *
      * @param accountId 存款账户的 id
      * @param amount    存款金额
-     * @return 修改的行数
+     * @return 数据库被修改的行数
      */
     int deposit(String accountId, BigDecimal amount);
+
+    /**
+     * 取款
+     *
+     * @param accountId 取款账户的 id
+     * @param amount    取款金额
+     * @return 数据库被修改的行数
+     */
+    int withdraw(String accountId, BigDecimal amount);
 }

@@ -21,11 +21,10 @@ public class LoginFilter extends HttpFilter {
         String requestPath = request.getServletPath();
         String[] pathSplit = requestPath.split("\\.");
 
-        // 判断是否是静态文件或者登录页面或登录 servlet
+        // 判断是否是静态文件或者登录页面或登录 servlet 或登录验证码
         if ((pathSplit.length == 2 && StringUtils.join(pathSplit[1], "css", "js", "html", "ttf"))
             || StringUtils.join(requestPath, "/index.jsp", "/index.html", "/index.htm", "/", "/login")
-            || "/account/login".equals(requestPath)) {
-            // 是静态文件
+            || "/account/login".equals(requestPath) || "/verifyCode".equals(requestPath)) {
             request.removeAttribute("message");
             chain.doFilter(request, response);
             return;

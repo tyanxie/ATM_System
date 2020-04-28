@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <div class="input-group input-group-lg">
                             <input id="deposit" name="deposit"
-                                   type="number" step="100" min="0" class="form-control"
+                                   type="number" step="100" min="100" class="form-control"
                                    placeholder="100.00"
                                    aria-describedby="sizing-addon1">
                             <span class="input-group-addon">￥</span>

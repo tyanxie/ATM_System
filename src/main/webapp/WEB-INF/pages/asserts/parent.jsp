@@ -10,6 +10,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">ATM系统</a>
+            <span id="welcome-span" class="navbar-text">${sessionScope.user.name}, 欢迎您!</span>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
@@ -49,9 +50,13 @@
                     </a>
                 </li>
             </ul>
-            <div class="nav navbar-nav navbar-right">
-                <span class="navbar-text">${sessionScope.user.name}, 欢迎您!</span>
-            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="${pageContext.request.contextPath}/account/logout">
+                        <span style="font-size: medium;">退出</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>

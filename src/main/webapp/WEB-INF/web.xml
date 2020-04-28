@@ -103,7 +103,7 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>withdrawEndJsp</servlet-name>
-        <jsp-file>/WEB-INF/pages/withdraw/withdrawEndJsp.jsp</jsp-file>
+        <jsp-file>/WEB-INF/pages/withdraw/withdrawEnd.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>withdrawEndJsp</servlet-name>

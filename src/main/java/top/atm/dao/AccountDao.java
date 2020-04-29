@@ -24,6 +24,13 @@ public interface AccountDao {
     Account getAccountByIdAndPassword(String id, String password);
 
     /**
+     * 获取用户的 id
+     * @param accountId 用户的帐号 id
+     * @return 用户的 id
+     */
+    Long getUserIdByAccountId(String accountId);
+
+    /**
      * 获取余额
      *
      * @param accountId 需要查询余额的账户的 id
@@ -48,4 +55,6 @@ public interface AccountDao {
      * @return 数据库被修改的行数
      */
     int withdraw(String accountId, BigDecimal amount);
+
+    int transfer(String sourceAccountId, String targetAccountId, BigDecimal amount);
 }

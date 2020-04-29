@@ -1,7 +1,6 @@
 package top.atm.web.servlet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import top.atm.message.AbstractMessage;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 /**
  * 取款 Servlet, 用于接收用户取款的请求
- * 接受路径为 /withdraw 仅接受 post 请求
+ * 接受路径为 /account/withdraw 仅接受 post 请求
  *
  * @author taifu
  */
 
-@WebServlet ("/withdraw")
+@WebServlet ("/account/withdraw")
 public class WithdrawServlet extends HttpServlet {
     private static final AccountService accountService = new AccountServiceImpl();
 
@@ -27,10 +26,10 @@ public class WithdrawServlet extends HttpServlet {
         String withdraw = request.getParameter("withdraw");
         String accountId = (String) request.getSession().getAttribute("accountId");
 
-        boolean result = accountService.withdraw(accountId, withdraw);
-        if (!result) {
-            // 存款失败
-            response.sendRedirect(request.getContextPath() + "/withdrawFail");
+        AbstractMessage message = accountService.withdraw(accountId, withdraw);
+        if (message.isError()) {
+            request.setAttribute("messages", message.getMessages());
+            request.getRequestDispatcher("/withdrawFail").forward(request, response);
             return;
         }
         request.setAttribute("withdraw", withdraw);

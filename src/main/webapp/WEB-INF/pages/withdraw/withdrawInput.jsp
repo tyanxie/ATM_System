@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
+        <title>Withdraw</title>
         <%@include file="../asserts/style.jsp" %>
     </head>
 
@@ -12,7 +12,7 @@
 
         <div align="center">
             <div id="parent-container">
-                <form action="${pageContext.request.contextPath}/withdraw" method="post">
+                <form action="${pageContext.request.contextPath}/account/withdraw" method="post">
                     <div>
                         <label for="withdraw"
                                style="font-weight: normal;font-size: x-large; color: black; ">请输入取款金额</label>

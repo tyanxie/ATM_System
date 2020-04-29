@@ -20,4 +20,10 @@
             right: 72px;
         }
     }
+
+    div footer a, div footer a:hover, div footer a:active, div footer a:visited, div footer a:link {
+        text-decoration: none;
+        color: #000;
+        background: transparent;
+    }
 </style>

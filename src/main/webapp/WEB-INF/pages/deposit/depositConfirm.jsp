@@ -12,7 +12,7 @@
 
         <div align="center">
             <div id="parent-container">
-                <form action="${pageContext.request.contextPath}/deposit" method="post">
+                <form action="${pageContext.request.contextPath}/account/deposit" method="post">
                     <div style="margin: 40px">
                         <span style="font-size: x-large; color: black; ">你将要存款的金额为：${requestScope.deposit}</span>
                     </div>

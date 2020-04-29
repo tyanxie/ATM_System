@@ -68,6 +68,14 @@
 
     <!-- 转账界面的映射 -->
     <servlet>
+        <servlet-name>transferConfirmJsp</servlet-name>
+        <jsp-file>/WEB-INF/pages/transfer/transferConfirm.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>transferConfirmJsp</servlet-name>
+        <url-pattern>/transferConfirm</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>transferInputJsp</servlet-name>
         <jsp-file>/WEB-INF/pages/transfer/transferInput.jsp</jsp-file>
     </servlet>

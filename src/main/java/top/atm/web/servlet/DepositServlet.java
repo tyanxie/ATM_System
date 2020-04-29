@@ -14,10 +14,11 @@ import java.io.IOException;
 /**
  * 用于存款的 Servlet
  *
+ * 接受路径为 /account/deposit
  * @author taifu
  */
 
-@WebServlet ("/deposit")
+@WebServlet ("/account/deposit")
 public class DepositServlet extends HttpServlet {
     private static final AccountService accountService = new AccountServiceImpl();
 
@@ -55,10 +56,11 @@ public class DepositServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String deposit = request.getParameter("deposit");
-        AbstractMessage message = accountService.verifyDeposit(deposit);
+        String accountId = (String) request.getSession().getAttribute("accountId");
+        AbstractMessage message = accountService.verifyDeposit(accountId, deposit);
         if (message.getStatus() != 0) {
             // 校验失败, 转发到失败页面
-            request.setAttribute("messages",message.getMessages());
+            request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/depositFail").forward(request, response);
             return;
         }

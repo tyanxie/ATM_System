@@ -13,7 +13,7 @@
 
         <div align="center">
             <div id="parent-container">
-                <form action="${pageContext.request.contextPath}/deposit" method="get">
+                <form action="${pageContext.request.contextPath}/account/deposit" method="get">
                     <div>
                         <label for="deposit"
                                style="font-weight: normal;font-size: x-large; color: black; ">请输入存款金额</label>
@@ -23,7 +23,7 @@
                         <div class="input-group input-group-lg">
                             <input id="deposit" name="deposit"
                                    type="number" step="100" min="100" class="form-control"
-                                   placeholder="100.00"
+                                   placeholder="100.00" required autofocus
                                    aria-describedby="sizing-addon1">
                             <span class="input-group-addon">￥</span>
                         </div>

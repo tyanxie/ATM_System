@@ -17,6 +17,12 @@
                 height: 450px;
                 text-align: center;
             }
+
+            div footer a, div footer a:hover, div footer a:active, div footer a:visited, div footer a:link {
+                text-decoration: none;
+                color: #000;
+                background: transparent;
+            }
         </style>
     </head>
 
@@ -32,7 +38,7 @@
                         </span>
                         <input id="username" name="account-id" value="${sessionScope.accountId}"
                                type="text" class="form-control" placeholder="Account Id"
-                               aria-describedby="sizing-addon1" autofocus>
+                               aria-describedby="sizing-addon1" required autofocus>
                     </div>
 
                     <!-- 密码 -->
@@ -43,7 +49,7 @@
                         </span>
                         <input id="password" name="password"
                                type="password" class="form-control"
-                               placeholder="Password" aria-describedby="sizing-addon1">
+                               placeholder="Password" required aria-describedby="sizing-addon1">
                     </div>
 
                     <!-- 验证码 -->
@@ -54,7 +60,7 @@
                     </span>
                         <input id="captcha" name="verify-code"
                                type="text" class="form-control"
-                               placeholder="Verify Code" aria-describedby="sizing-addon1">
+                               placeholder="Verify Code" required aria-describedby="sizing-addon1">
                     </div>
                     <p></p>
                     <a href="javascript:void(0)" onclick="flushVerifyCode()">

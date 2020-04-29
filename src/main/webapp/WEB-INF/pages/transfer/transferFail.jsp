@@ -1,10 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Transfer</title>
-        <%@include file="../asserts/style.jsp"%>
+        <%@include file="../asserts/style.jsp" %>
     </head>
 
     <body>
@@ -13,22 +14,19 @@
         <div align="center">
             <div id="parent-container">
                 <form>
-                    <div style="margin: 13px">
-                        <span style="font-size: x-large; color: black; ">账户余额不足</span>
-                    </div>
-                    <div style="margin: 13px">
-                        <span style="font-size: x-large; color: black; ">转账失败</span>
-                    </div>
+                    <c:forEach items="${requestScope.messages}" var="message">
+                        <div style="margin: 13px">
+                            <span style="font-size: x-large; color: black; ">${message}</span>
+                        </div>
+                    </c:forEach>
                 </form>
                 <p></p>
-                <button type="button" class="btn" onclick="window.location.href='../select.jsp'">
+                <a class="btn btn-default" href="${pageContext.request.contextPath}/select">
                     <span style="font-size: x-large; color: black; ">点击此处返回主页</span>
-                </button>
+                </a>
             </div>
         </div>
     </body>
 
     <%@include file="../asserts/script.jsp" %>
-
-
 </html>

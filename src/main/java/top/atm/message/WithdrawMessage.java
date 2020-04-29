@@ -4,17 +4,16 @@ package top.atm.message;
  * @author taifu
  */
 
-@SuppressWarnings ("unused")
-public class DepositMessage extends AbstractMessage {
-    public DepositMessage(Status status, String... messages) {
+public class WithdrawMessage extends AbstractMessage {
+    public WithdrawMessage(Status status, String... messages) {
         super(status.getCode(), messages);
     }
 
     @Override
     public String debugStatus() {
-        for (Status value : Status.values()) {
-            if (value.code.equals(getStatus())) {
-                return value.name();
+        for (Status status : Status.values()) {
+            if (status.getCode().equals(getStatus())) {
+                return status.name();
             }
         }
         return "UNKNOWN";
@@ -24,10 +23,8 @@ public class DepositMessage extends AbstractMessage {
         OK(0),
         FORMAT_ERROR(1),
         DATABASE_ERROR(2),
-        DIGITAL_ERROR(3),
-        VERIFY_ERROR(4),
-        OVER_LIMIT_ERROR(5),
-        UNKNOWN(6);
+        INSUFFICIENT_BALANCE_ERROR(3),  // 余额不足
+        UNKNOWN(4);
 
         private final Integer code;
 

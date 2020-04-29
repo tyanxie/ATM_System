@@ -2,8 +2,6 @@ package top.atm.dao.impl;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import top.atm.bean.User;
 import top.atm.dao.UserDao;
 import top.atm.util.CloseUtils;

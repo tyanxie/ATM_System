@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Transfer</title>
-        <%@include file="../asserts/style.jsp"%>
+        <%@include file="../asserts/style.jsp" %>
     </head>
 
     <body>
@@ -17,13 +17,13 @@
                         <span style="font-size: x-large; color: black; ">转账成功</span>
                     </div>
                     <div style="margin: 20px">
-                        <span style="font-size: x-large; color: black; ">你已向xx用户转账xxxx￥</span>
+                        <span style="font-size: x-large; color: black; ">你已向 ${requestScope.targetUsername} 转账 ${requestScope.amount} ￥</span>
                     </div>
                 </form>
                 <p></p>
-                <button type="button" class="btn" onclick="window.location.href='../select.jsp'">
+                <a class="btn btn-default" href="${pageContext.request.contextPath}/select">
                     <span style="font-size: x-large; color: black; ">点击此处返回主页</span>
-                </button>
+                </a>
             </div>
         </div>
     </body>

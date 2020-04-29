@@ -21,8 +21,26 @@ public abstract class AbstractMessage implements Serializable {
     private final Integer status;
 
     public AbstractMessage(Integer status, String... messages) {
-        this.messages = messages;
         this.status = status;
+        this.messages = messages;
+    }
+
+    /**
+     * 返回状态码是否为成功
+     *
+     * @return 状态码为 0 则表示成功, 返回 true, 否则返回 false
+     */
+    public boolean isOK() {
+        return status == 0;
+    }
+
+    /**
+     * 返回状态码是否为错误
+     *
+     * @return 状态码为 0 则表示成功, 返回 false, 否则返回 true
+     */
+    public boolean isError() {
+        return status != 0;
     }
 
     /**

@@ -14,6 +14,24 @@ import java.sql.Connection;
  */
 
 public class UserDaoImpl implements UserDao {
+    private static volatile UserDao instance;
+
+    /**
+     * 使用单例模式中的双加锁方法
+     */
+    public static UserDao getInstance() {
+        if (instance == null) {
+            synchronized (UserDao.class) {
+                if (instance == null) {
+                    instance = new UserDaoImpl();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private UserDaoImpl() {}
+
     @Override
     public User getUserById(Long id) {
         Connection connection = null;

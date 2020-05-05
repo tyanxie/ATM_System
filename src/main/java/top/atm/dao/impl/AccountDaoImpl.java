@@ -16,6 +16,24 @@ import java.sql.*;
  */
 
 public class AccountDaoImpl implements AccountDao {
+    private static volatile AccountDao instance;
+
+    /**
+     * 使用单例模式中的双加锁方法
+     */
+    public static AccountDao getInstance() {
+        if (instance == null) {
+            synchronized (AccountDao.class) {
+                if (instance == null) {
+                    instance = new AccountDaoImpl();
+                }
+            }
+        }
+        return instance;
+    }
+
+    private AccountDaoImpl() {}
+
     @Override
     public Account getAccountByIdAndPassword(String id, String password) {
         Connection connection = null;

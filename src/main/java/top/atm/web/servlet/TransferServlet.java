@@ -20,7 +20,7 @@ import java.io.IOException;
 
 @WebServlet ("/account/transfer")
 public class TransferServlet extends HttpServlet {
-    private static final AccountService accountService = new AccountServiceImpl();
+    private static final AccountService accountService = AccountServiceImpl.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

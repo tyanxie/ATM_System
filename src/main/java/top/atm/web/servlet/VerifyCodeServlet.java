@@ -44,11 +44,20 @@ public class VerifyCodeServlet extends HttpServlet {
         graphics.setFont(FONT);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 4; i++) {
-
-            int index = RandomUtils.nextInt(0,CHARACTER.length());
+            int index = RandomUtils.nextInt(0, CHARACTER.length());
             char code = CHARACTER.charAt(index);
             sb.append(code);
             graphics.drawString("" + code, WIDTH / 5 * i + 10, (int) (HEIGHT / 1.25));
+        }
+        // 绘制干扰线
+        graphics.setColor(Color.green);
+        int x1, x2, y1, y2;
+        for (int i = 0; i < 10; i++) {
+            x1 = RandomUtils.nextInt(1, WIDTH);
+            x2 = RandomUtils.nextInt(1, WIDTH);
+            y1 = RandomUtils.nextInt(1, HEIGHT);
+            y2 = RandomUtils.nextInt(1, HEIGHT);
+            graphics.drawLine(x1, y1, x2, y2);
         }
 
         // 输出到页面上
@@ -59,7 +68,7 @@ public class VerifyCodeServlet extends HttpServlet {
         bos.flush();
 
         // 放置到 Session 中
-        request.getSession().setAttribute("realVerifyCode",sb.toString());
+        request.getSession().setAttribute("realVerifyCode", sb.toString());
     }
 
     @Override

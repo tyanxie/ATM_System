@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  */
 
 public class AccountDaoTest {
-    private static final AccountDao accountDao = new AccountDaoImpl();
+    private static final AccountDao accountDao = AccountDaoImpl.getInstance();
 
     @Test
     public void getBalance() {

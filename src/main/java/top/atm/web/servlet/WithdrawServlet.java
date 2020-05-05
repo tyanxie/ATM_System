@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @WebServlet ("/account/withdraw")
 public class WithdrawServlet extends HttpServlet {
-    private static final AccountService accountService = new AccountServiceImpl();
+    private static final AccountService accountService = AccountServiceImpl.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -25,6 +25,7 @@ public interface AccountDao {
 
     /**
      * 获取用户的 id
+     *
      * @param accountId 用户的帐号 id
      * @return 用户的 id
      */
@@ -56,5 +57,13 @@ public interface AccountDao {
      */
     int withdraw(String accountId, BigDecimal amount);
 
+    /**
+     * 转账
+     *
+     * @param sourceAccountId 转账方账户 id
+     * @param targetAccountId 收款方账户 id
+     * @param amount 转账金额
+     * @return 数据库被修改的行数
+     */
     int transfer(String sourceAccountId, String targetAccountId, BigDecimal amount);
 }

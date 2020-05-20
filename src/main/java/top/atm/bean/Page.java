@@ -1,22 +1,22 @@
 package top.atm.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Page {
+@SuppressWarnings ("unused")
+public class Page<T> implements Serializable {
     private Integer totalItems;
     private Integer itemPerPage;
     private Integer currentPage;
-    private List<TransactionRecord> itemList;
+    private List<T> itemList;
 
-    public Page(Integer totalItems, Integer itemPerPage,
-                Integer currentPage, List<TransactionRecord> itemList) {
+    public Page() {}
+
+    public Page(Integer totalItems, Integer itemPerPage, Integer currentPage, List<T> itemList) {
         this.totalItems = totalItems;
         this.itemPerPage = itemPerPage;
         this.currentPage = currentPage;
         this.itemList = itemList;
-    }
-
-    public Page() {
     }
 
     public Integer getTotalItems() {
@@ -43,13 +43,21 @@ public class Page {
         this.currentPage = currentPage;
     }
 
-    public List<TransactionRecord> getItemList() {
+    public List<T> getItemList() {
         return itemList;
     }
 
-    public void setItemList(List<TransactionRecord> itemList) {
+    public void setItemList(List<T> itemList) {
         this.itemList = itemList;
     }
 
-
+    @Override
+    public String toString() {
+        return "Page{" +
+            "totalItems=" + totalItems +
+            ", itemPerPage=" + itemPerPage +
+            ", currentPage=" + currentPage +
+            ", itemList=" + itemList +
+            '}';
+    }
 }

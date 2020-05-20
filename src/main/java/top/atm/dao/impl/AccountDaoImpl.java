@@ -4,7 +4,9 @@ import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
 import top.atm.bean.Account;
+import top.atm.bean.TransactionRecord;
 import top.atm.dao.AccountDao;
+import top.atm.dao.TransactionRecordDao;
 import top.atm.util.CloseUtils;
 import top.atm.util.JdbcUtils;
 
@@ -120,9 +122,21 @@ public class AccountDaoImpl implements AccountDao {
             if (result != 1) {
                 // 存储出现意外, 需要回滚
                 connection.rollback();
+                return result;
+            }
+
+            // 存款成功, 记录存款记录
+            TransactionRecord record = new TransactionRecord(null, accountId,
+                null, TransactionRecord.DEPOSIT, amount, null);
+            ps = TransactionRecordDao.createTransactionRecodeInsertStatement(connection, record);
+            result = ps.executeUpdate();
+            if (result != 1) {
+                // 插入存款记录失败, 需要回滚
+                connection.rollback();
             } else {
                 connection.commit();
             }
+
             return result;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -148,9 +162,21 @@ public class AccountDaoImpl implements AccountDao {
             if (result != 1) {
                 // 存储出现意外, 需要回滚
                 connection.rollback();
+                return result;
+            }
+
+            // 取款成功, 存储交易记录
+            TransactionRecord record = new TransactionRecord(null, accountId,
+                null, TransactionRecord.WITHDRAW, amount, null);
+            ps = TransactionRecordDao.createTransactionRecodeInsertStatement(connection, record);
+            result = ps.executeUpdate();
+            if (result != 1) {
+                // 插入取款记录失败, 需要回滚
+                connection.rollback();
             } else {
                 connection.commit();
             }
+
             return result;
         } catch (Exception e) {
             logger.error(e.getMessage());
@@ -185,6 +211,27 @@ public class AccountDaoImpl implements AccountDao {
             int sourceResult = ps.executeUpdate();
             if (sourceResult != 1) {
                 // 源账户存储失败, 转账失败并回滚
+                connection.rollback();
+                return 0;
+            }
+
+            // 转账成功, 记录转账记录
+            TransactionRecord record = new TransactionRecord(null, sourceAccountId,
+                targetAccountId, TransactionRecord.TRANSFER, amount, null);
+            ps = TransactionRecordDao.createTransactionRecodeInsertStatement(connection, record);
+            sourceResult = ps.executeUpdate();
+            if (sourceResult != 1) {
+                // 源账户存储转账记录失败, 回滚
+                connection.rollback();
+                return 0;
+            }
+
+            record.setType(TransactionRecord.CREDIT);
+            record.swapSourceAndTarget();
+            ps = TransactionRecordDao.createTransactionRecodeInsertStatement(connection, record);
+            targetResult = ps.executeUpdate();
+            if (targetResult != 1) {
+                // 目标账户存储转账记录失败, 回滚
                 connection.rollback();
                 return 0;
             }

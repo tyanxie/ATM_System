@@ -19,7 +19,7 @@ public class JdbcUtils {
     /**
      * 私有构造函数防止构造
      */
-    private JdbcUtils(){}
+    private JdbcUtils() {}
 
     private static DataSource dataSource;
 
@@ -31,7 +31,7 @@ public class JdbcUtils {
             properties.load(resource);
             DruidDataSource druid = (DruidDataSource) DruidDataSourceFactory.createDataSource(properties);
 
-            // url
+            // 获取 mysql 数据库对应的 url
             String ipPassword = properties.getProperty("ip");
             String ipPublicKey = properties.getProperty("ipPublicKey");
             String ip = ConfigTools.decrypt(ipPublicKey, ipPassword);
@@ -39,10 +39,12 @@ public class JdbcUtils {
             String urlTail = properties.getProperty("urlTail");
             druid.setUrl(urlHead + ip + urlTail);
 
-            // Password
+            // 获取 mysql 数据库的密码
             String password = properties.getProperty("password");
             String publicKey = properties.getProperty("publicKey");
             druid.setPassword(ConfigTools.decrypt(publicKey, password));
+
+            // 初始化 DruidDataSource
             druid.init();
 
             dataSource = druid;
@@ -52,6 +54,9 @@ public class JdbcUtils {
         }
     }
 
+    /**
+     * 获取数据库连接
+     */
     public static Connection getConnection() throws Exception {
         return dataSource.getConnection();
     }

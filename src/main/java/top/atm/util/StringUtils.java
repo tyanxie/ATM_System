@@ -18,7 +18,7 @@ public class StringUtils {
      * @param source 源字符串
      * @param target 目标字符串集合
      * @return 如果 source 在 target 中出现, 那么返回值为 true, 否则返回为 false
-     *          如果 source 和 target 有任意一个为 null, 那么返回 false
+     * 如果 source 和 target 有任意一个为 null, 那么返回 false
      */
     public static boolean join(String source, String... target) {
         if (source == null || target == null) {
@@ -50,6 +50,7 @@ public class StringUtils {
 
     /**
      * 以忽略大小写的形式判断两个字符串是否相等
+     *
      * @param source 源字符串
      * @param target 目标字符串
      * @return 如果字符串均为 null 或内容在全部转为小写后相同, 则返回 true, 否则返回 false

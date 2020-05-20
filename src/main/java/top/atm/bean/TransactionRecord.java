@@ -1,8 +1,10 @@
 package top.atm.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class TransactionRecord {
+@SuppressWarnings ("unused")
+public class TransactionRecord implements Serializable {
     private Long id;
     private String sourceAccountId;
     private String targetAccountId;
@@ -10,18 +12,42 @@ public class TransactionRecord {
     private BigDecimal amount;
     private String remarks;
 
-    public TransactionRecord(Long id, String sourceAccountId,
-                             String targetAccountId, Integer type,
-                             BigDecimal amount, String remarks) {
+    /**
+     * 存款, 取款, 转账, 收款所对应的 type 的值
+     */
+    public static final Integer DEPOSIT = 0;
+    public static final Integer WITHDRAW = 1;
+    public static final Integer TRANSFER = 2;
+    public static final Integer CREDIT = 3;
+
+    public static String getTypeInString(Integer type) {
+        if (TransactionRecord.DEPOSIT.equals(type)) {
+            return "存款";
+        } else if (TransactionRecord.WITHDRAW.equals(type)) {
+            return "取款";
+        } else if (TransactionRecord.TRANSFER.equals(type)) {
+            return "转账";
+        } else if (TransactionRecord.CREDIT.equals(type)) {
+            return "收款";
+        }
+        return "未知";
+    }
+
+    public void swapSourceAndTarget() {
+        String temp = this.sourceAccountId;
+        this.sourceAccountId = this.targetAccountId;
+        this.targetAccountId = temp;
+    }
+
+    public TransactionRecord() {}
+
+    public TransactionRecord(Long id, String sourceAccountId, String targetAccountId, Integer type, BigDecimal amount, String remarks) {
         this.id = id;
         this.sourceAccountId = sourceAccountId;
         this.targetAccountId = targetAccountId;
         this.type = type;
         this.amount = amount;
         this.remarks = remarks;
-    }
-
-    public TransactionRecord() {
     }
 
     public Long getId() {
@@ -70,5 +96,17 @@ public class TransactionRecord {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    @Override
+    public String toString() {
+        return "TransactionRecord{" +
+            "id=" + id +
+            ", sourceAccountId='" + sourceAccountId + '\'' +
+            ", targetAccountId='" + targetAccountId + '\'' +
+            ", type=" + type +
+            ", amount=" + amount +
+            ", remarks='" + remarks + '\'' +
+            '}';
     }
 }

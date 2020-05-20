@@ -30,3 +30,8 @@ buildNumber.properties
 
 # 日志
 logs/
+
+# idea
+.idea/
+out/
+*.iml

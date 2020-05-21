@@ -68,4 +68,12 @@ public interface AccountService {
      * @return 转账的结果
      */
     AbstractMessage transfer(String sourceAccountId, String targetAccountId, String transfer);
+
+    /**
+     * 余额查询
+     *
+     * @param accountId 查询的账户id
+     * @return
+     */
+    AbstractMessage balanceQuery(String accountId);
 }

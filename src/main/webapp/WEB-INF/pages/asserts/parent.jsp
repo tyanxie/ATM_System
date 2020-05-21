@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="${pageContext.request.contextPath}/balanceQuery">
                         <span style="font-size: medium;">余额查询</span>
                     </a>
                 </li>

@@ -194,4 +194,14 @@ public class AccountServiceImpl implements AccountService {
         User targetUser = userDao.getUserById(targetUserId);
         return TransferMessage.get(TransferMessage.Status.OK, targetUser.getName());
     }
+
+    @Override
+    public AbstractMessage balanceQuery(String accountId) {
+        BigDecimal balance = accountDao.getBalance(accountId);
+        if (balance == null) {
+            // 获取账户余额失败
+            return BalanceQueryMessage.get(BalanceQueryMessage.Status.DATABASE_ERROR);
+        }
+        return BalanceQueryMessage.get(BalanceQueryMessage.Status.OK, balance.toString());
+    }
 }

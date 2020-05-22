@@ -72,7 +72,7 @@
                     <input style="font-size: x-large; color: black;" type="submit" class="btn btn-default" value="登录">
                 </form>
             </div>
-            <p style="color: red;font-size: x-large">${requestScope.message}</p>
+            <p style="color: #ff0000;font-size: x-large">${requestScope.message}</p>
         </div>
     </body>
 

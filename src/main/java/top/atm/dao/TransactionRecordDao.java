@@ -1,14 +1,18 @@
 package top.atm.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import top.atm.bean.TransactionRecord;
 
 import java.sql.*;
+import java.util.List;
 
 /**
  * @author taifu
  */
 
 public interface TransactionRecordDao {
+    Logger logger = LoggerFactory.getLogger(TransactionRecordDao.class);
 
     /**
      * 向数据库中插入交易记录地模板 SQL
@@ -29,11 +33,11 @@ public interface TransactionRecordDao {
 
     /**
      * 构造一个用于插入交易记录的 PreparedStatement
+     *
      * @param connection SQL 连接
-     * @param record TransactionRecord 对象, 存储了当前交易的信息
+     * @param record     TransactionRecord 对象, 存储了当前交易的信息
      * @return 可用于插入交易记录的 PreparedStatement 对象
      */
-
     static PreparedStatement createTransactionRecodeInsertStatement(
         Connection connection, TransactionRecord record) throws SQLException {
 
@@ -46,4 +50,22 @@ public interface TransactionRecordDao {
 
         return ps;
     }
+
+    /**
+     * 查询交易记录总数
+     *
+     * @param accountId 账户 id
+     * @return 对应账户 id 的交易记录的总数
+     */
+    Long getTotalRecordByAccountId(String accountId);
+
+    /**
+     * 查询交易记录
+     *
+     * @param accountId   账户 id
+     * @param startNumber 当前要查询的页面
+     * @param itemPerPage 每一页的记录数
+     * @return 当前页面中账户 id 对应的 itemPerPage 个交易记录
+     */
+    List<TransactionRecord> listRangeRecord(String accountId, Long startNumber, Integer itemPerPage);
 }

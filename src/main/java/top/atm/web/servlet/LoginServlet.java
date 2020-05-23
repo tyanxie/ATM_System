@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         // 获取用户输入的账户名和密码
         String accountId = request.getParameter("account-id");
         String password = request.getParameter("password");
-        // 无论如何将 accountId 写入 session 域中, 方便用户和系统重用
+        // 无论如何将 accountId 写入 session 域中, 方便系统重用
         session.setAttribute("accountId",accountId);
         // 在获取了 session 中的真正验证码后需要将其删除, 防止重复利用
         session.removeAttribute("realVerifyCode");

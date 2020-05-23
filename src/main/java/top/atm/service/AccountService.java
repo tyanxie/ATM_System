@@ -7,6 +7,7 @@ import top.atm.message.AbstractMessage;
 
 /**
  * @author taifu
+ * @author BlessingChimes
  */
 
 public interface AccountService {
@@ -73,7 +74,7 @@ public interface AccountService {
      * 余额查询
      *
      * @param accountId 查询的账户id
-     * @return
+     * @return 查询余额的结果
      */
     AbstractMessage balanceQuery(String accountId);
 }

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=utf-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -36,9 +37,17 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         </span>
-                        <input id="username" name="account-id" value="${sessionScope.accountId}"
-                               type="text" class="form-control" placeholder="Account Id"
-                               aria-describedby="sizing-addon1" required autofocus>
+
+                        <c:if test="${sessionScope.accountId == null}">
+                            <input id="username" name="account-id" value="${sessionScope.accountId}"
+                                   type="text" class="form-control" placeholder="Account Id"
+                                   aria-describedby="sizing-addon1" required autofocus>
+                        </c:if>
+                        <c:if test="${sessionScope.accountId != null}">
+                            <input id="username" name="account-id" value="${sessionScope.accountId}"
+                                   type="text" class="form-control" placeholder="Account Id"
+                                   aria-describedby="sizing-addon1" required>
+                        </c:if>
                     </div>
 
                     <!-- 密码 -->
@@ -47,9 +56,17 @@
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
                         </span>
-                        <input id="password" name="password"
-                               type="password" class="form-control"
-                               placeholder="Password" required aria-describedby="sizing-addon1">
+
+                        <c:if test="${sessionScope.accountId == null}">
+                            <input id="password" name="password"
+                                   type="password" class="form-control"
+                                   placeholder="Password" aria-describedby="sizing-addon1" required>
+                        </c:if>
+                        <c:if test="${sessionScope.accountId != null}">
+                            <input id="password" name="password"
+                                   type="password" class="form-control"
+                                   placeholder="Password" aria-describedby="sizing-addon1" required autofocus>
+                        </c:if>
                     </div>
 
                     <!-- 验证码 -->

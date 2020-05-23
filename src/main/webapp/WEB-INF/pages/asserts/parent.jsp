@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="${pageContext.request.contextPath}/record">
                         <span style="font-size: medium;">查询交易记录</span>
                     </a></li>
                 <li>

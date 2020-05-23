@@ -3,28 +3,34 @@ package top.atm.bean;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author BlessingChimes
+ * @author taifu
+ */
+
 @SuppressWarnings ("unused")
 public class Page<T> implements Serializable {
-    private Integer totalItems;
+    private Long totalItems;
+    private Integer totalPages;
     private Integer itemPerPage;
     private Integer currentPage;
+    private Long startNumber;
     private List<T> itemList;
 
-    public Page() {}
-
-    public Page(Integer totalItems, Integer itemPerPage, Integer currentPage, List<T> itemList) {
-        this.totalItems = totalItems;
-        this.itemPerPage = itemPerPage;
-        this.currentPage = currentPage;
-        this.itemList = itemList;
-    }
-
-    public Integer getTotalItems() {
+    public Long getTotalItems() {
         return totalItems;
     }
 
-    public void setTotalItems(Integer totalItems) {
+    public void setTotalItems(Long totalItems) {
         this.totalItems = totalItems;
+    }
+
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
     public Integer getItemPerPage() {
@@ -43,6 +49,14 @@ public class Page<T> implements Serializable {
         this.currentPage = currentPage;
     }
 
+    public Long getStartNumber() {
+        return startNumber;
+    }
+
+    public void setStartNumber(Long startNumber) {
+        this.startNumber = startNumber;
+    }
+
     public List<T> getItemList() {
         return itemList;
     }
@@ -55,8 +69,10 @@ public class Page<T> implements Serializable {
     public String toString() {
         return "Page{" +
             "totalItems=" + totalItems +
+            ", totalPages=" + totalPages +
             ", itemPerPage=" + itemPerPage +
             ", currentPage=" + currentPage +
+            ", startNumber=" + startNumber +
             ", itemList=" + itemList +
             '}';
     }

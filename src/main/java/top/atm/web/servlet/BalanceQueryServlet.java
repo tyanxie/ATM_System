@@ -16,9 +16,10 @@ import java.io.IOException;
 /**
  * @author BlessingChimes
  */
-@WebServlet("/account/balanceQuery")
+
+@WebServlet ("/account/balanceQuery")
 public class BalanceQueryServlet extends HttpServlet {
-    private static AccountService accountService = AccountServiceImpl.getInstance();
+    private static final AccountService accountService = AccountServiceImpl.getInstance();
 
     static final Logger logger = LoggerFactory.getLogger(DepositServlet.class);
 
@@ -26,7 +27,8 @@ public class BalanceQueryServlet extends HttpServlet {
         String accountId = (String) request.getSession().getAttribute("accountId");
 
         AbstractMessage message = accountService.balanceQuery(accountId);
-        if (message.getStatus() != 0) { // 默认0为成功状态
+        if (message.getStatus() != 0) {
+            // 默认0为成功状态
             request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/balanceQueryFail").forward(request, response);
             logger.error(message.debugStatus());
@@ -36,7 +38,6 @@ public class BalanceQueryServlet extends HttpServlet {
         // 将余额放入 request 域中以便 jsp 页面获取
         request.setAttribute("balance", message.getMessages());
         request.getRequestDispatcher("/balanceQueryEnd").forward(request, response);
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

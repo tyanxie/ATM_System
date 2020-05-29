@@ -32,6 +32,17 @@ public class RecordCheckServlet extends HttpServlet {
             // 发生错误
             response.getWriter().write("<h1>出错了</h1>");
         }
+
+        for (TransactionRecord transactionRecord : recordPage.getItemList()) {
+            if (transactionRecord.getType() == 2) {
+                String transferTargetUsername = recordService.getUserName(transactionRecord.getTargetAccountId());
+                transactionRecord.setUserName(transferTargetUsername);
+            }
+            if (transactionRecord.getType() == 3) {
+                String proceedSourceUsername = recordService.getUserName(transactionRecord.getSourceAccountId());
+                transactionRecord.setUserName(proceedSourceUsername);
+            }
+        }
         request.setAttribute("recordPage", recordPage);
         request.getRequestDispatcher("/recordCheck").forward(request, response);
     }

@@ -9,6 +9,8 @@ import top.atm.util.CloseUtils;
 import top.atm.util.JdbcUtils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.List;
 
 /**
@@ -52,6 +54,39 @@ public class TransactionRecordDaoImpl implements TransactionRecordDao {
             CloseUtils.close(connection);
         }
         return 0L;
+    }
+
+    @Override
+    public String getUserNameByAccountId(String accountId) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = JdbcUtils.getConnection();
+            // 设置为只读, 优化查询速度
+            connection.setReadOnly(true);
+
+            ps = connection.prepareStatement("select user_id from account where id = ?");
+            ps.setString(1, accountId);
+            rs = ps.executeQuery();
+            rs.next();  // 在从 ResultSet 中提取数据之前一定要先调用 next() 方法将其移动到结果集的第一行
+            int userId = rs.getInt(1);
+
+            ps = connection.prepareStatement("select name from user where id = ?");
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("dao exception");
+            logger.error(e.getMessage());
+        } finally {
+            System.out.println("closeConnection");
+            CloseUtils.close(connection, ps, rs);
+        }
+        return null;
     }
 
     @Override

@@ -1,5 +1,7 @@
 package top.atm.bean;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,6 +19,8 @@ public class TransactionRecord implements Serializable {
     private BigDecimal amount;
     private String remarks;
     private Date occurTime;
+    // 为了查询转账目标用户或收款源目标账户用户的名字而添加的属性
+    private String userName;
 
     /**
      * 存款, 取款, 转账, 收款所对应的 type 的值
@@ -77,6 +81,16 @@ public class TransactionRecord implements Serializable {
         this.sourceAccountId = sourceAccountId;
     }
 
+    // 获取打码后的收款源账户 id
+    public String getOverlaySourceAccountId() {
+        return StringUtils.overlay(sourceAccountId, "****", 4, sourceAccountId.length() - 1 - 3);
+    }
+
+    // 获取打码后的转账目标账户 id
+    public String getOverlayTargetAccountId() {
+        return StringUtils.overlay(targetAccountId, "****", 4, targetAccountId.length() - 1 - 3);
+    }
+
     public String getTargetAccountId() {
         return targetAccountId;
     }
@@ -115,6 +129,21 @@ public class TransactionRecord implements Serializable {
 
     public void setOccurTime(Date occurTime) {
         this.occurTime = occurTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getOverlayUserName() {
+        if (userName.equals("用户姓名未知")) {
+            return userName;
+        }
+        return StringUtils.overlay(userName, "*", 1, userName.length() - 1);
     }
 
     @Override

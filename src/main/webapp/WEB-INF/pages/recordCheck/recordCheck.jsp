@@ -29,20 +29,38 @@
                         <table class="table">
                             <tr>
                                 <th>序号</th>
+                                <th>转账目标/收款源</th>
                                 <th>金额</th>
                                 <th>类型</th>
                                 <th>时间</th>
+                                <th>备注</th>
                             </tr>
 
                             <c:forEach items="${requestScope.recordPage.itemList}" var="record" varStatus="status">
                                 <tr style="text-align: left">
-                                    <td>${requestScope.recordPage.startNumber + status.index + 1}
+                                    <td>
+                                            ${requestScope.recordPage.startNumber + status.index + 1}
                                     </td>
+
+                                    <!-- 添加转账目标和收款源 -->
+                                    <td>
+                                        <c:if test="${record.type == 2}">
+                                            ${record.overlayUserName}, ${record.overlayTargetAccountId}
+                                        </c:if>
+                                        <c:if test="${record.type == 3}">
+                                            ${record.overlayUserName}, ${record.overlaySourceAccountId}
+                                        </c:if>
+                                    </td>
+
                                     <td>${record.amount}</td>
                                     <td>${record.typeInString}</td>
                                     <td>
                                         <fmt:formatDate value="${record.occurTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                     </td>
+
+                                    <!-- 添加备注 -->
+                                    <td>${record.remarks}</td>
+
                                 </tr>
                             </c:forEach>
                         </table>

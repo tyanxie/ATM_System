@@ -70,4 +70,13 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
 
         return recordPage;
     }
+
+    public String getUserName(String accountId) {
+        String username = recordDao.getUserNameByAccountId(accountId);
+
+        if (username == null) {
+            return "用户姓名未知";
+        }
+        return username;
+    }
 }

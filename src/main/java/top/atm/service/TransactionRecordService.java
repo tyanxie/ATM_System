@@ -22,11 +22,4 @@ public interface TransactionRecordService {
      * @return 一个页面对象, 包含了页面所需的所有元组和属性
      */
     Page<TransactionRecord> getRecord(String accountId, String currentPage, String itemPerPage);
-
-    /**
-     * 获取转账目标账户或收款源账户的用户姓名
-     * @param accountId 转账目标账户或收款源账户 id
-     * @return 返回转账目标账户或收款源账户的用户姓名
-     */
-    String getUserName(String accountId);
 }

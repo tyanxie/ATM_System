@@ -3,7 +3,9 @@ package top.atm.web.servlet;
 import top.atm.bean.Page;
 import top.atm.bean.TransactionRecord;
 import top.atm.service.TransactionRecordService;
+import top.atm.service.UserService;
 import top.atm.service.impl.TransactionRecordServiceImpl;
+import top.atm.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,7 @@ import java.io.IOException;
 @WebServlet ("/record")
 public class RecordCheckServlet extends HttpServlet {
     private static final TransactionRecordService recordService = TransactionRecordServiceImpl.getInstance();
+    private static final UserService userService = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,17 +34,17 @@ public class RecordCheckServlet extends HttpServlet {
         if (recordPage == null) {
             // 发生错误
             response.getWriter().write("<h1>出错了</h1>");
+            return;
         }
 
         for (TransactionRecord transactionRecord : recordPage.getItemList()) {
-            if (transactionRecord.getType() == 2) {
-                String transferTargetUsername = recordService.getUserName(transactionRecord.getTargetAccountId());
-                transactionRecord.setUserName(transferTargetUsername);
+            String username = null;
+            if (TransactionRecord.TRANSFER.equals(transactionRecord.getType())) {
+                username = userService.getUsernameByAccountId(transactionRecord.getTargetAccountId());
+            } else if (TransactionRecord.CREDIT.equals(transactionRecord.getType())) {
+                username = userService.getUsernameByAccountId(transactionRecord.getSourceAccountId());
             }
-            if (transactionRecord.getType() == 3) {
-                String proceedSourceUsername = recordService.getUserName(transactionRecord.getSourceAccountId());
-                transactionRecord.setUserName(proceedSourceUsername);
-            }
+            transactionRecord.setUsername(username);
         }
         request.setAttribute("recordPage", recordPage);
         request.getRequestDispatcher("/recordCheck").forward(request, response);

@@ -19,8 +19,11 @@ public class TransactionRecord implements Serializable {
     private BigDecimal amount;
     private String remarks;
     private Date occurTime;
-    // 为了查询转账目标用户或收款源目标账户用户的名字而添加的属性
-    private String userName;
+
+    /**
+     * 为了查询转账目标用户或收款源目标账户用户的名字而添加的属性
+     */
+    private String username;
 
     /**
      * 存款, 取款, 转账, 收款所对应的 type 的值
@@ -47,6 +50,27 @@ public class TransactionRecord implements Serializable {
         String temp = this.sourceAccountId;
         this.sourceAccountId = this.targetAccountId;
         this.targetAccountId = temp;
+    }
+
+    /**
+     * 获取打码后的收款源账户 id
+     */
+    public String getOverlaySourceAccountId() {
+        return StringUtils.overlay(sourceAccountId, "****", 4, sourceAccountId.length() - 1 - 3);
+    }
+
+    /**
+     * 获取打码后的转账目标账户 id
+     */
+    public String getOverlayTargetAccountId() {
+        return StringUtils.overlay(targetAccountId, "****", 4, targetAccountId.length() - 1 - 3);
+    }
+
+    public String getOverlayUserName() {
+        if (username.equals("用户姓名未知")) {
+            return username;
+        }
+        return StringUtils.overlay(username, "*", 1, username.length() - 1);
     }
 
     public TransactionRecord() {}
@@ -79,16 +103,6 @@ public class TransactionRecord implements Serializable {
 
     public void setSourceAccountId(String sourceAccountId) {
         this.sourceAccountId = sourceAccountId;
-    }
-
-    // 获取打码后的收款源账户 id
-    public String getOverlaySourceAccountId() {
-        return StringUtils.overlay(sourceAccountId, "****", 4, sourceAccountId.length() - 1 - 3);
-    }
-
-    // 获取打码后的转账目标账户 id
-    public String getOverlayTargetAccountId() {
-        return StringUtils.overlay(targetAccountId, "****", 4, targetAccountId.length() - 1 - 3);
     }
 
     public String getTargetAccountId() {
@@ -131,19 +145,12 @@ public class TransactionRecord implements Serializable {
         this.occurTime = occurTime;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getOverlayUserName() {
-        if (userName.equals("用户姓名未知")) {
-            return userName;
-        }
-        return StringUtils.overlay(userName, "*", 1, userName.length() - 1);
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override
@@ -156,6 +163,7 @@ public class TransactionRecord implements Serializable {
             ", amount=" + amount +
             ", remarks='" + remarks + '\'' +
             ", occurTime=" + occurTime +
+            ", username='" + username + '\'' +
             '}';
     }
 }

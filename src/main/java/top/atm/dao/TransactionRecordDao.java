@@ -47,7 +47,6 @@ public interface TransactionRecordDao {
         ps.setInt(3, record.getType());
         ps.setBigDecimal(4, record.getAmount());
         ps.setString(5, record.getRemarks());
-
         return ps;
     }
 
@@ -58,13 +57,6 @@ public interface TransactionRecordDao {
      * @return 对应账户 id 的交易记录的总数
      */
     Long getTotalRecordByAccountId(String accountId);
-
-    /**
-     * 针对转账目标账户和收款的源账户需要获取其用户的姓名
-     * @param accountId 转账目标账户或收款的源账户
-     * @return 返回的是转账目标账户或收款的源账户对应的用户的姓名
-     */
-    String getUserNameByAccountId(String accountId);
 
     /**
      * 查询交易记录

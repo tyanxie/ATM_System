@@ -1,4 +1,3 @@
-<%@ page import="top.atm.bean.TransactionRecord" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=utf-8" isELIgnored="false" trimDirectiveWhitespaces="true" %>
@@ -41,8 +40,6 @@
                                     <td>
                                             ${requestScope.recordPage.startNumber + status.index + 1}
                                     </td>
-
-                                    <!-- 添加转账目标和收款源 -->
                                     <td>
                                         <c:if test="${record.type == 2}">
                                             ${record.overlayUserName}, ${record.overlayTargetAccountId}
@@ -51,16 +48,12 @@
                                             ${record.overlayUserName}, ${record.overlaySourceAccountId}
                                         </c:if>
                                     </td>
-
                                     <td>${record.amount}</td>
                                     <td>${record.typeInString}</td>
                                     <td>
                                         <fmt:formatDate value="${record.occurTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                     </td>
-
-                                    <!-- 添加备注 -->
                                     <td>${record.remarks}</td>
-
                                 </tr>
                             </c:forEach>
                         </table>

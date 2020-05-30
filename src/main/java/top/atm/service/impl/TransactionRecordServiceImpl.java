@@ -44,39 +44,23 @@ public class TransactionRecordServiceImpl implements TransactionRecordService {
             return null;
         }
 
-        Page<TransactionRecord> recordPage = new Page<>();
-
-        recordPage.setCurrentPage(currentPageInt);
-        recordPage.setItemPerPage(itemPerPageInt);
-
         Long totalItems = recordDao.getTotalRecordByAccountId(accountId);
-        recordPage.setTotalItems(totalItems);
-
+        int totalPages;
         if ((long) (totalItems.intValue() / (double) itemPerPageInt) == totalItems / (double) itemPerPageInt) {
-            recordPage.setTotalPages((totalItems.intValue() / itemPerPageInt));
+            totalPages = totalItems.intValue() / itemPerPageInt;
         } else {
-            recordPage.setTotalPages((totalItems.intValue() / itemPerPageInt) + 1);
+            totalPages = (totalItems.intValue() / itemPerPageInt) + 1;
         }
-
         long startNumber = (currentPageInt - 1) * itemPerPageInt;
-        recordPage.setStartNumber(startNumber);
-
         List<TransactionRecord> recordList = recordDao.listRangeRecord(accountId, startNumber, itemPerPageInt);
-        recordPage.setItemList(recordList);
 
-        for (TransactionRecord record : recordList) {
-            logger.info(record.toString());
-        }
-
-        return recordPage;
-    }
-
-    public String getUserName(String accountId) {
-        String username = recordDao.getUserNameByAccountId(accountId);
-
-        if (username == null) {
-            return "用户姓名未知";
-        }
-        return username;
+        return new Page.Builder<TransactionRecord>()
+            .setCurrentPage(currentPageInt)
+            .setItemPerPage(itemPerPageInt)
+            .setTotalItems(totalItems)
+            .setStartNumber(startNumber)
+            .setItemList(recordList)
+            .setTotalPages(totalPages)
+            .build();
     }
 }

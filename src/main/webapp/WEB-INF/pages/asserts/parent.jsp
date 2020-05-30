@@ -36,7 +36,6 @@
                     </a>
                 </li>
                 <li>
-                    <!-- 修改超链接以使其单击后能直接调用余额查询功能 -->
                     <a href="${pageContext.request.contextPath}/account/balanceQuery">
                         <span style="font-size: medium;">余额查询</span>
                     </a>
@@ -44,7 +43,8 @@
                 <li>
                     <a href="${pageContext.request.contextPath}/record">
                         <span style="font-size: medium;">查询交易记录</span>
-                    </a></li>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript:void(0)">
                         <span style="font-size: medium;">修改账户信息</span>

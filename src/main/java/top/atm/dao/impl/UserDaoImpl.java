@@ -8,6 +8,7 @@ import top.atm.util.CloseUtils;
 import top.atm.util.JdbcUtils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 
 /**
  * @author taifu
@@ -40,7 +41,7 @@ public class UserDaoImpl implements UserDao {
             QueryRunner runner = new QueryRunner();
             return runner.query(
                 connection,
-                "select id, name from user where id = ?",
+                "select id, name, address, phone_number phoneNumber from user where id = ?",
                 new BeanHandler<>(User.class),
                 id
             );
@@ -50,5 +51,27 @@ public class UserDaoImpl implements UserDao {
             CloseUtils.close(connection);
         }
         return null;
+    }
+
+    @Override
+    public int update(User user) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+            connection = JdbcUtils.getConnection();
+            ps = connection.prepareStatement("update user set name = ?, address = ?, phone_number = ? where id = ?");
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getAddress());
+            ps.setString(3, user.getPhoneNumber());
+            ps.setLong(4, user.getId());
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            logger.error("修改用户信息过程中发生错误 " + e.getMessage());
+        } finally {
+            CloseUtils.close(ps, connection);
+        }
+
+        return 0;
     }
 }

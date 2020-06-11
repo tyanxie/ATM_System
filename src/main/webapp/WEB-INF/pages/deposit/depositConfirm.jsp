@@ -29,6 +29,5 @@
             </div>
         </div>
     </body>
-
     <%@include file="../asserts/script.jsp" %>
 </html>

@@ -6,7 +6,7 @@ package top.atm.util;
  * @author taifu
  */
 
-public class StringUtils {
+public final class StringUtils {
     /**
      * 私有构造函数防止构造
      */
@@ -44,6 +44,19 @@ public class StringUtils {
     public static boolean equals(String source, String target) {
         if (source == null) {
             return target == null;
+        }
+        return source.equals(target);
+    }
+
+    /**
+     * 判断两个字符串是否相等
+     *
+     * @return 如果两个字符串中有一个为 null 或其值不相同, 则返回 false
+     * 如果两个字符串值相同且均不为 null 则返回 true
+     */
+    public static boolean equalsNonNull(String source, String target) {
+        if (source == null || target == null) {
+            return false;
         }
         return source.equals(target);
     }

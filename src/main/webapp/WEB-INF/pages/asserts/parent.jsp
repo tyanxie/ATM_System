@@ -46,7 +46,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)">
+                    <a href="${pageContext.request.contextPath}/modifySelect">
                         <span style="font-size: medium;">修改账户信息</span>
                     </a>
                 </li>

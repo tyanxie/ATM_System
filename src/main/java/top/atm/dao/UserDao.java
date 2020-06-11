@@ -19,4 +19,6 @@ public interface UserDao {
      * 获取失败则为 null
      */
     User getUserById(Long id);
+
+    int update(User user);
 }

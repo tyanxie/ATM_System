@@ -250,4 +250,46 @@ public class AccountDaoImpl implements AccountDao {
         }
         return 0;
     }
+
+    @Override
+    public String getPassword(String accountId) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            connection = JdbcUtils.getConnection();
+            connection.setReadOnly(true);
+            ps = connection.prepareStatement("select password from account where id = ?");
+            ps.setString(1, accountId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("password");
+            }
+        } catch (Exception e) {
+            logger.error("查找密码时发生错误: " + e.getMessage());
+        } finally {
+            CloseUtils.close(rs, ps, connection);
+        }
+        return null;
+    }
+
+    @Override
+    public int changePassword(String accountId, String newPassword) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+
+        try {
+            connection = JdbcUtils.getConnection();
+            ps = connection.prepareStatement("update account set password = ? where id = ?");
+            ps.setString(1, newPassword);
+            ps.setString(2, accountId);
+            return ps.executeUpdate();
+        } catch (Exception e) {
+            logger.error("修改密码时发生错误: " + e.getMessage());
+        } finally {
+            CloseUtils.close(ps, connection);
+        }
+        return 0;
+    }
 }

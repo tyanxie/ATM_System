@@ -22,15 +22,15 @@ public class TransferMessage extends AbstractMessage {
         messageMap.put(Status.OK,
             new TransferMessage(Status.OK));
         messageMap.put(Status.FORMAT_ERROR,
-            new TransferMessage(TransferMessage.Status.FORMAT_ERROR, "转账金额有误"));
+            new TransferMessage(Status.FORMAT_ERROR, "转账金额有误"));
         messageMap.put(Status.DATABASE_ERROR,
-            new TransferMessage(TransferMessage.Status.DATABASE_ERROR, "数据库访问异常", "请稍后重试或寻找管理员"));
+            new TransferMessage(Status.DATABASE_ERROR, "数据库访问异常", "请稍后重试或寻找管理员"));
         messageMap.put(Status.INSUFFICIENT_BALANCE_ERROR,
-            new TransferMessage(TransferMessage.Status.INSUFFICIENT_BALANCE_ERROR, "账户余额不足", "转账失败"));
+            new TransferMessage(Status.INSUFFICIENT_BALANCE_ERROR, "账户余额不足", "转账失败"));
         messageMap.put(Status.TARGET_NOT_EXIST_ERROR,
-            new TransferMessage(TransferMessage.Status.TARGET_NOT_EXIST_ERROR, "目标账户不存在"));
+            new TransferMessage(Status.TARGET_NOT_EXIST_ERROR, "目标账户不存在"));
         messageMap.put(Status.SELF_ERROR,
-            new TransferMessage(TransferMessage.Status.SELF_ERROR, "不能给自己转账"));
+            new TransferMessage(Status.SELF_ERROR, "不能给自己转账"));
         messageMap.put(Status.UNKNOWN,
             new TransferMessage(Status.UNKNOWN, "发生未知错误", "请联系管理员解决"));
     }

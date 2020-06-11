@@ -24,7 +24,8 @@ public class LoginFilter extends HttpFilter {
         // 判断是否是静态文件或者登录页面或登录 servlet 或登录验证码
         if ((pathSplit.length == 2 && StringUtils.join(pathSplit[1], "css", "js", "html", "ttf"))
             || StringUtils.join(requestPath, "/index.jsp", "/index.html", "/index.htm", "/", "/login")
-            || "/account/login".equals(requestPath) || "/verifyCode".equals(requestPath)) {
+            || "/account/login".equals(requestPath) || "/account/logout".equals(requestPath)
+            || "/verifyCode".equals(requestPath)) {
             request.removeAttribute("message");
             chain.doFilter(request, response);
             return;

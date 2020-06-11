@@ -62,8 +62,25 @@ public interface AccountDao {
      *
      * @param sourceAccountId 转账方账户 id
      * @param targetAccountId 收款方账户 id
-     * @param amount 转账金额
+     * @param amount          转账金额
      * @return 数据库被修改的行数
      */
     int transfer(String sourceAccountId, String targetAccountId, BigDecimal amount);
+
+    /**
+     * 获取账户当前的密码
+     *
+     * @param accountId 账户 id
+     * @return 账户当前密码
+     */
+    String getPassword(String accountId);
+
+    /**
+     * 修改账户的密码
+     *
+     * @param accountId 账户 id
+     * @param newPassword 新密码
+     * @return 修改的结果, 修改成功则为 1, 失败则为 0
+     */
+    int changePassword(String accountId, String newPassword);
 }

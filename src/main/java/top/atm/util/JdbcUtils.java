@@ -15,7 +15,7 @@ import java.util.Properties;
  * @author taifu
  */
 
-public class JdbcUtils {
+public final class JdbcUtils {
     /**
      * 私有构造函数防止构造
      */

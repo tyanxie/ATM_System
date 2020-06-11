@@ -3,18 +3,12 @@ package top.atm.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * @author taifu
  */
 
 @SuppressWarnings ("ConstantConditions")
 public class StringUtilsTest {
-
-    @Test
-    public void join() {
-    }
 
     @Test
     public void testEquals() {

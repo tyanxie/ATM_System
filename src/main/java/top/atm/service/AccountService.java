@@ -77,4 +77,14 @@ public interface AccountService {
      * @return 查询余额的结果
      */
     AbstractMessage balanceQuery(String accountId);
+
+    /**
+     * 修改密码
+     *
+     * @param accountId 需要修改密码的账户的 id
+     * @param oldPassword 旧密码
+     * @param newPassword 新密码
+     * @return 修改密码的结果, 1 代表成功, 0 代表失败
+     */
+    AbstractMessage changePassword(String accountId, String oldPassword, String newPassword);
 }

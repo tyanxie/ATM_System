@@ -1,5 +1,6 @@
 package top.atm.service.impl;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomUtils;
 import top.atm.bean.Account;
 import top.atm.bean.User;
@@ -44,14 +45,15 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User getAccountHostUser(String id, String password) {
-        Account account = accountDao.getAccountByIdAndPassword(id, password);
+        // 获取加密后的密码
+        String encodePassword = DigestUtils.sha256Hex(password);
+        Account account = accountDao.getAccountByIdAndPassword(id, encodePassword);
         if (account == null) {
             return null;
         }
         User user = userDao.getUserById(account.getUserId());
         if (user == null) {
             logger.warn("获取 account 成功但获取 user 失败");
-            return null;
         }
         return user;
     }
@@ -199,10 +201,36 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AbstractMessage balanceQuery(String accountId) {
         BigDecimal balance = accountDao.getBalance(accountId);
-        if (balance == null) {
-            // 获取账户余额失败
-            return BalanceQueryMessage.get(BalanceQueryMessage.Status.DATABASE_ERROR);
+        return
+            balance == null
+                ? BalanceQueryMessage.get(BalanceQueryMessage.Status.DATABASE_ERROR)
+                : BalanceQueryMessage.get(BalanceQueryMessage.Status.OK, balance.toString());
+    }
+
+    @Override
+    public AbstractMessage changePassword(String accountId, String oldPassword, String newPassword) {
+        // 获取当前加密后的 password
+        String currentPassword = accountDao.getPassword(accountId);
+        if (currentPassword == null) {
+            // 发生了未知错误, 当前密码查询失败, 无法断定是数据库错误
+            return ModifyMessage.get(ModifyMessage.Status.UNKNOWN);
         }
-        return BalanceQueryMessage.get(BalanceQueryMessage.Status.OK, balance.toString());
+
+        // 比较用户输入的密码经过 sha256 加密后是否与 currentPassword 相同
+        String encodeOldPassword = DigestUtils.sha256Hex(oldPassword);
+        if (!StringUtils.equalsNonNull(currentPassword, encodeOldPassword)) {
+            // 用户输入的旧密码与数据库中的密码不匹配
+            return ModifyMessage.get(ModifyMessage.Status.PASSWORD_NOT_MATCH_ERROR);
+        }
+
+        // 旧密码正确, 加密并修改数据库密码
+        String encodeNewPassword = DigestUtils.sha256Hex(newPassword);
+        int result = accountDao.changePassword(accountId, encodeNewPassword);
+
+        if (result != 1) {
+            // 数据库发生错误
+            return ModifyMessage.get(ModifyMessage.Status.DATABASE_ERROR);
+        }
+        return ModifyMessage.get(ModifyMessage.Status.OK);
     }
 }

@@ -7,7 +7,7 @@ package top.atm.util;
  * @author taifu
  */
 
-public class CloseUtils {
+public final class CloseUtils {
     /**
      * 私有构造函数防止构造
      */

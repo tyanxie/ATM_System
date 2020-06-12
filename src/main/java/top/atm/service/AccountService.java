@@ -3,7 +3,8 @@ package top.atm.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.atm.bean.User;
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
+import top.atm.message.DefaultMessage;
 
 /**
  * @author taifu
@@ -30,7 +31,7 @@ public interface AccountService {
      * @param deposit   用户输入的待存储的金额
      * @return 校验结果
      */
-    AbstractMessage verifyDeposit(String accountId, String deposit);
+    ErrorCode verifyDeposit(String accountId, String deposit);
 
     /**
      * 存款
@@ -39,7 +40,7 @@ public interface AccountService {
      * @param deposit   存款的金额, 需要进行校验并转换为 BigDecimal 类型
      * @return 存款的结果
      */
-    AbstractMessage deposit(String accountId, String deposit);
+    ErrorCode deposit(String accountId, String deposit);
 
     /**
      * 取款
@@ -48,7 +49,7 @@ public interface AccountService {
      * @param withdraw  取款的金额, 需要进行校验并转换为 BigDecimal 类型
      * @return 取款的结果
      */
-    AbstractMessage withdraw(String accountId, String withdraw);
+    ErrorCode withdraw(String accountId, String withdraw);
 
     /**
      * 提前校验用户输入的金额和目标账户是否存在
@@ -58,7 +59,7 @@ public interface AccountService {
      * @param transfer        转账金额
      * @return 判断的结果
      */
-    AbstractMessage verifyTransfer(String sourceAccountId, String targetAccountId, String transfer);
+    DefaultMessage verifyTransfer(String sourceAccountId, String targetAccountId, String transfer);
 
     /**
      * 转账
@@ -68,7 +69,7 @@ public interface AccountService {
      * @param transfer        转账金额
      * @return 转账的结果
      */
-    AbstractMessage transfer(String sourceAccountId, String targetAccountId, String transfer);
+    DefaultMessage transfer(String sourceAccountId, String targetAccountId, String transfer);
 
     /**
      * 余额查询
@@ -76,7 +77,7 @@ public interface AccountService {
      * @param accountId 查询的账户id
      * @return 查询余额的结果
      */
-    AbstractMessage balanceQuery(String accountId);
+    DefaultMessage balanceQuery(String accountId);
 
     /**
      * 修改密码
@@ -86,5 +87,5 @@ public interface AccountService {
      * @param newPassword 新密码
      * @return 修改密码的结果, 1 代表成功, 0 代表失败
      */
-    AbstractMessage changePassword(String accountId, String oldPassword, String newPassword);
+    ErrorCode changePassword(String accountId, String oldPassword, String newPassword);
 }

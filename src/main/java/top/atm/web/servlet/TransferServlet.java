@@ -1,6 +1,7 @@
 package top.atm.web.servlet;
 
-import top.atm.message.AbstractMessage;
+import top.atm.constant.WebConstant;
+import top.atm.message.DefaultMessage;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 
@@ -26,10 +27,10 @@ public class TransferServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String targetAccountId = request.getParameter("target-account-id");
         String transfer = request.getParameter("transfer");
-        String sourceAccountId = (String) request.getSession().getAttribute("accountId");
-        AbstractMessage message = accountService.transfer(sourceAccountId, targetAccountId, transfer);
+        String sourceAccountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
+        DefaultMessage message = accountService.transfer(sourceAccountId, targetAccountId, transfer);
 
-        if (message.isError()) {
+        if (message.getCode().isError()) {
             request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/transferFail").forward(request, response);
             return;
@@ -44,10 +45,10 @@ public class TransferServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String targetAccountId = request.getParameter("target-account-id");
         String transfer = request.getParameter("transfer");
-        String sourceAccountId = (String) request.getSession().getAttribute("accountId");
-        AbstractMessage message = accountService.verifyTransfer(sourceAccountId, targetAccountId, transfer);
+        String sourceAccountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
+        DefaultMessage message = accountService.verifyTransfer(sourceAccountId, targetAccountId, transfer);
 
-        if (message.isError()) {
+        if (message.getCode().isError()) {
             // 不可转账
             request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/transferFail").forward(request, response);

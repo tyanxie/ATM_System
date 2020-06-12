@@ -2,7 +2,8 @@ package top.atm.web.servlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
+import top.atm.constant.WebConstant;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 
@@ -33,15 +34,15 @@ public class DepositServlet extends HttpServlet {
         // 客户端传递来的存款金额
         String deposit = request.getParameter("deposit");
         // 从 Session 中获取账户 id
-        String accountId = (String) request.getSession().getAttribute("accountId");
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
 
         // 调用 service 层的方法进行存款
-        AbstractMessage message = accountService.deposit(accountId, deposit);
-        if (message.getStatus() != 0) {
+        ErrorCode code = accountService.deposit(accountId, deposit);
+        if (code.isError()) {
             // 存款失败
-            request.setAttribute("messages", message.getMessages());
+            request.setAttribute("messages", code.getMessages());
             request.getRequestDispatcher("/depositFail").forward(request, response);
-            logger.error(message.debugStatus());
+            logger.error(code.name());
             return;
         }
 
@@ -57,11 +58,11 @@ public class DepositServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String deposit = request.getParameter("deposit");
-        String accountId = (String) request.getSession().getAttribute("accountId");
-        AbstractMessage message = accountService.verifyDeposit(accountId, deposit);
-        if (message.isError()) {
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
+        ErrorCode code = accountService.verifyDeposit(accountId, deposit);
+        if (code.isError()) {
             // 校验失败, 转发到失败页面
-            request.setAttribute("messages", message.getMessages());
+            request.setAttribute("messages", code.getMessages());
             request.getRequestDispatcher("/depositFail").forward(request, response);
             return;
         }

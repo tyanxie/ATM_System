@@ -1,6 +1,7 @@
 package top.atm.web.servlet;
 
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
+import top.atm.constant.WebConstant;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 import top.atm.util.StringUtils;
@@ -37,11 +38,11 @@ public class PasswordChangeServlet extends HttpServlet {
         }
 
         // 从 session 中获取 accountId
-        String accountId = (String) request.getSession().getAttribute("accountId");
-        AbstractMessage message = accountService.changePassword(accountId, oldPassword, newPassword);
-        if (message.isError()) {
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
+        ErrorCode code = accountService.changePassword(accountId, oldPassword, newPassword);
+        if (code.isError()) {
             // 修改失败
-            request.setAttribute("messages", message.getMessages());
+            request.setAttribute("messages", code.getMessages());
             request.getRequestDispatcher("/modifyFail").forward(request, response);
             return;
         }

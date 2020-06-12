@@ -10,7 +10,12 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#">ATM系统</a>
-            <span id="welcome-span" class="navbar-text">${sessionScope.user.name}, 欢迎您!</span>
+            <c:if test="${sessionScope.user == null}">
+                <span id="welcome-span" class="navbar-text"></span>
+            </c:if>
+            <c:if test="${sessionScope.user != null}">
+                <span id="welcome-span" class="navbar-text">${sessionScope.user.name}, 欢迎您!</span>
+            </c:if>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">

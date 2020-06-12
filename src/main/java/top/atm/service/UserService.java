@@ -1,6 +1,6 @@
 package top.atm.service;
 
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
 
 /**
  * @author taifu
@@ -9,5 +9,5 @@ import top.atm.message.AbstractMessage;
 public interface UserService {
     String getUsernameByAccountId(String accountId);
 
-    AbstractMessage modifyInformation(Long id, String name, String address, String phoneNumber);
+    ErrorCode modifyInformation(Long id, String name, String address, String phoneNumber);
 }

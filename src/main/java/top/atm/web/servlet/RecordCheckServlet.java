@@ -2,6 +2,7 @@ package top.atm.web.servlet;
 
 import top.atm.bean.Page;
 import top.atm.bean.TransactionRecord;
+import top.atm.constant.WebConstant;
 import top.atm.service.TransactionRecordService;
 import top.atm.service.UserService;
 import top.atm.service.impl.TransactionRecordServiceImpl;
@@ -28,7 +29,7 @@ public class RecordCheckServlet extends HttpServlet {
         // ipp 定义为一个页面显示的元素的个数
         String itemPerPage = request.getParameter("ipp");
         // 从 Session 域中获取 accountId
-        String accountId = (String) request.getSession().getAttribute("accountId");
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
 
         Page<TransactionRecord> recordPage = recordService.getRecord(accountId, currentPage, itemPerPage);
         if (recordPage == null) {

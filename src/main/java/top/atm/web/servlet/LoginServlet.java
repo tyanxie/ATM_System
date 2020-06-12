@@ -1,6 +1,7 @@
 package top.atm.web.servlet;
 
 import top.atm.bean.User;
+import top.atm.constant.WebConstant;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 import top.atm.util.StringUtils;
@@ -31,9 +32,9 @@ public class LoginServlet extends HttpServlet {
         String accountId = request.getParameter("account-id");
         String password = request.getParameter("password");
         // 无论如何将 accountId 写入 session 域中, 方便系统重用
-        session.setAttribute("accountId",accountId);
+        session.setAttribute(WebConstant.ACCOUNT_ID,accountId);
         // 在获取了 session 中的真正验证码后需要将其删除, 防止重复利用
-        session.removeAttribute("realVerifyCode");
+        session.removeAttribute(WebConstant.SESSION_VERIFY_CODE);
         // 对验证码进行校验, 验证时忽略大小写
         if (verifyCode == null||!StringUtils.equalsIgnoreCase(realVerifyCode,verifyCode)){
             // 验证码错误或用户并未填写验证码
@@ -51,7 +52,7 @@ public class LoginServlet extends HttpServlet {
             return;
         }
         // 登录成功, 将用户对象 ( 只含有 id 和 name ) 添加进 session 域中, 方便在整个 session 中使用
-        request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute(WebConstant.USER, user);
         response.sendRedirect(request.getContextPath() + "/select");
     }
 }

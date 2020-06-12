@@ -1,7 +1,8 @@
 package top.atm.web.servlet;
 
 import top.atm.bean.User;
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
+import top.atm.constant.WebConstant;
 import top.atm.service.UserService;
 import top.atm.service.impl.UserServiceImpl;
 
@@ -27,9 +28,9 @@ public class InformationModifyServlet extends HttpServlet {
         String address = request.getParameter("address");
         String phoneNumber = request.getParameter("phone-number");
 
-        User user = (User) request.getSession().getAttribute("user");
+        User user = (User) request.getSession().getAttribute(WebConstant.USER);
 
-        AbstractMessage message = userService.modifyInformation(user.getId(), name, address, phoneNumber);
+        ErrorCode message = userService.modifyInformation(user.getId(), name, address, phoneNumber);
 
         if (message.isError()) {
             // 修改失败

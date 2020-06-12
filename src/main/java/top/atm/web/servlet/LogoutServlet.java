@@ -1,5 +1,7 @@
 package top.atm.web.servlet;
 
+import top.atm.constant.WebConstant;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
@@ -19,7 +21,7 @@ public class LogoutServlet extends HttpServlet {
             移除用户示例, 用户即完成登出
             注意此处并没有移除 accountId, 方便用户登出错误时重新登录无需输入 accountId
          */
-        request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute(WebConstant.USER);
         response.sendRedirect(request.getContextPath() + "/");
     }
 

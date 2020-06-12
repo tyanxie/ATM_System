@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <name>ATM_System</name>
-    <url>http://www.tlianfou.top</url>
+    <url>http://www.tlianfou.top/atm</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

@@ -1,6 +1,7 @@
 package top.atm.web.servlet;
 
-import top.atm.message.AbstractMessage;
+import top.atm.constant.ErrorCode;
+import top.atm.constant.WebConstant;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 
@@ -24,9 +25,9 @@ public class WithdrawServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 获取用户取款的金额, 以及用户的帐号
         String withdraw = request.getParameter("withdraw");
-        String accountId = (String) request.getSession().getAttribute("accountId");
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
 
-        AbstractMessage message = accountService.withdraw(accountId, withdraw);
+        ErrorCode message = accountService.withdraw(accountId, withdraw);
         if (message.isError()) {
             request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/withdrawFail").forward(request, response);

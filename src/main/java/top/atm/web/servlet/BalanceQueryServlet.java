@@ -2,7 +2,8 @@ package top.atm.web.servlet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import top.atm.message.AbstractMessage;
+import top.atm.constant.WebConstant;
+import top.atm.message.DefaultMessage;
 import top.atm.service.AccountService;
 import top.atm.service.impl.AccountServiceImpl;
 
@@ -24,14 +25,14 @@ public class BalanceQueryServlet extends HttpServlet {
     static final Logger logger = LoggerFactory.getLogger(DepositServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String accountId = (String) request.getSession().getAttribute("accountId");
+        String accountId = (String) request.getSession().getAttribute(WebConstant.ACCOUNT_ID);
 
-        AbstractMessage message = accountService.balanceQuery(accountId);
-        if (message.getStatus() != 0) {
+        DefaultMessage message = accountService.balanceQuery(accountId);
+        if (message.getCode().isError()) {
             // 默认0为成功状态
             request.setAttribute("messages", message.getMessages());
             request.getRequestDispatcher("/balanceQueryFail").forward(request, response);
-            logger.error(message.debugStatus());
+            logger.error(message.getCode().name());
             return;
         }
 

@@ -1,6 +1,7 @@
 package top.atm.web.servlet;
 
 import org.apache.commons.lang3.RandomUtils;
+import top.atm.constant.WebConstant;
 
 import javax.imageio.ImageIO;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ public class VerifyCodeServlet extends HttpServlet {
     /**
      * 验证码使用的字符集
      */
-    private static final String CHARACTER = "1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+    private static final String CHARACTER = "1234567890qwertyuopasdfghjkzxcvbnmQWERTYUIOPASDFGHJKZXCVBNM";
     /**
      * 验证码的字体
      */
@@ -68,7 +69,7 @@ public class VerifyCodeServlet extends HttpServlet {
         bos.flush();
 
         // 放置到 Session 中
-        request.getSession().setAttribute("realVerifyCode", sb.toString());
+        request.getSession().setAttribute(WebConstant.SESSION_VERIFY_CODE, sb.toString());
     }
 
     @Override

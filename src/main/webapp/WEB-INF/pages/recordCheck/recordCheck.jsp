@@ -44,11 +44,9 @@
                                         <c:if test="${record.type == 2}">
                                             ${record.overlayUserName}, ${record.overlayTargetAccountId}
                                         </c:if>
-                                        <%--
                                         <c:if test="${record.type == 3}">
                                             ${record.overlayUserName}, ${record.overlaySourceAccountId}
                                         </c:if>
-                                        --%>
                                     </td>
                                     <td>${record.amount}</td>
                                     <td>${record.typeInString}</td>

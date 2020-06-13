@@ -65,20 +65,25 @@ public class TransactionRecordDaoImpl implements TransactionRecordDao {
             QueryRunner runner = new QueryRunner();
             return runner.query(
                 connection,
-                "select transaction_record.id              id," +
-                        "       source_account_id              sourceAccountId," +
-                        "       target_account_id              targetAccountId," +
-                        "       type," +
-                        "       amount," +
-                        "       remarks," +
-                        "       transaction_record.create_time occurTime," +
-                        "       user.name                      username" +
-                        " from (transaction_record left join account" +
-                        " on transaction_record.target_account_id = account.id)" +
-                        " left join user on user_id = `user`.id" +
-                        " where source_account_id = ?" +
-                        " order by transaction_record.create_time" +
-                        " limit ?, ?",
+                "select temp.id           id," +
+                    "       source_account_id sourceAccountId," +
+                    "       target_account_id targetAccountId, " +
+                    "       type," +
+                    "       amount," +
+                    "       remarks," +
+                    "       temp.create_time  occurTime," +
+                    "       user.name         username " +
+                    "from (" +
+                    "         select *" +
+                    "         from transaction_record" +
+                    "         where source_account_id = ?" +
+                    "         order by create_time desc" +
+                    "         limit ?, ?" +
+                    "     ) as temp" +
+                    "         left join account on if(type = 2, temp.target_account_id = account.id," +
+                    "                                 temp.source_account_id = account.id)" +
+                    "         left join user on user_id = `user`.id " +
+                    "order by temp.create_time desc",
                 new BeanListHandler<>(TransactionRecord.class),
                 accountId, startNumber, itemPerPage
             );

@@ -37,7 +37,7 @@ public class RecordCheckServlet extends HttpServlet {
             response.getWriter().write("<h1>出错了</h1>");
             return;
         }
-
+        /*
         for (TransactionRecord transactionRecord : recordPage.getItemList()) {
             String username = null;
             if (TransactionRecord.TRANSFER.equals(transactionRecord.getType())) {
@@ -47,6 +47,7 @@ public class RecordCheckServlet extends HttpServlet {
             }
             transactionRecord.setUsername(username);
         }
+        */
         request.setAttribute("recordPage", recordPage);
         request.getRequestDispatcher("/recordCheck").forward(request, response);
     }

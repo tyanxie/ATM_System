@@ -28,7 +28,7 @@
                         <table class="table">
                             <tr>
                                 <th>序号</th>
-                                <th>转账目标/收款源</th>
+                                <th>转账目标</th>
                                 <th>金额</th>
                                 <th>类型</th>
                                 <th>时间</th>
@@ -44,9 +44,11 @@
                                         <c:if test="${record.type == 2}">
                                             ${record.overlayUserName}, ${record.overlayTargetAccountId}
                                         </c:if>
+                                        <%--
                                         <c:if test="${record.type == 3}">
                                             ${record.overlayUserName}, ${record.overlaySourceAccountId}
                                         </c:if>
+                                        --%>
                                     </td>
                                     <td>${record.amount}</td>
                                     <td>${record.typeInString}</td>

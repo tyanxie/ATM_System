@@ -90,6 +90,12 @@
                 </form>
             </div>
             <p style="color: #ff0000;font-size: x-large">${requestScope.message}</p>
+            <p></p>
+            <div class="text-center">
+                <footer>
+                    <a href="https://beian.miit.gov.cn/">粤ICP备20032637号</a>
+                </footer>
+            </div>
         </div>
     </body>
 

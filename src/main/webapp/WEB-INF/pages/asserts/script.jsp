@@ -10,8 +10,8 @@
         $("body").append(
             "<p></p>" +
             "<div class=\"text-center\">" +
-            "   <footer>&copy;2019-2020 " +
-            "       <a target=\"_blank\" href=\"http://www.beian.miit.gov.cn\">粤 ICP 备 20032637 号</a>" +
+            "   <footer>" +
+            "       <a href=\"https://beian.miit.gov.cn/\">粤ICP备20032637号</a>" +
             "   </footer>" +
             "</div>");
     });

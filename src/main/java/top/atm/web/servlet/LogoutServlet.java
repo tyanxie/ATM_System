@@ -18,7 +18,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         /*
-            移除用户示例, 用户即完成登出
+            移除用户实例, 用户即完成登出
             注意此处并没有移除 accountId, 方便用户登出错误时重新登录无需输入 accountId
          */
         request.getSession().removeAttribute(WebConstant.USER);
